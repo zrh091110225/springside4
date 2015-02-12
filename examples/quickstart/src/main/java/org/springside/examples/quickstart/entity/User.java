@@ -98,7 +98,7 @@ public class User extends IdEntity {
 		return ImmutableList.copyOf(StringUtils.split(roles, ","));
 	}
 
-	// 设定JSON序列化时的日期格式
+	//设定JSON序列化时的日期格式
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
 	public Date getRegisterDate() {
 		return registerDate;
