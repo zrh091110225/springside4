@@ -13,6 +13,10 @@
 	default-lazy-init="true">
 
 	<description>Spring公共配置 </description>
+    <!--引入redis配置文件 -->
+    <import resource="redisContext.xml"/>
+
+    <context:property-placeholder ignore-unresolvable="true" location="classpath*:/*.properties" file-encoding="UTF-8"/>
 
 	<!-- 使用annotation 自动注册bean, 并保证@Required、@Autowired的属性被注入 -->
 	<context:component-scan base-package="org.springside.examples.quickstart">
@@ -57,8 +61,6 @@
 	
 	<!-- production环境 -->
  	<beans profile="production">
- 		<context:property-placeholder ignore-unresolvable="true"
-			location="classpath*:/application.properties" />	
 		
 		<!-- 数据源配置, 使用Tomcat JDBC连接池 -->
 		<bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
@@ -81,10 +83,6 @@
 	
 	<!-- local development环境 -->
 	<beans profile="development">
-		<context:property-placeholder ignore-resource-not-found="true"
-			location="classpath*:/application.properties,
-          			  classpath*:/application.development.properties" />	
-
 		<!-- Tomcat JDBC连接池 -->
 		<bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
 			<property name="driverClassName" value="${jdbc.driver}" />
@@ -97,11 +95,6 @@
 	
 	<!-- functional test 环境 -->
 	<beans profile="functional">
-		<context:property-placeholder ignore-resource-not-found="true"
-			location="classpath*:/application.properties,
-          			  classpath*:/application.functional.properties,
-          			  classpath*:/application.functional-local.properties" />	
-
 		<!-- Tomcat JDBC连接池 -->
 		<bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
 			<property name="driverClassName" value="${jdbc.driver}" />
@@ -119,10 +112,6 @@
 	
 	<!-- unit test环境 -->
 	<beans profile="test">
-	 	<context:property-placeholder ignore-resource-not-found="true"
-			location="classpath*:/application.properties,
-          			  classpath*:/application.test.properties" />	
-		
 		<!-- Spring Simple连接池 -->
 		<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
 			<property name="driverClass" value="${jdbc.driver}" />
